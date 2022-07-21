@@ -1,5 +1,6 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
-ARG VERSION=1.16.0
+ARG VERSION=1.17.0
+ARG PGBOUNCER_VER=pgbouncer-$VERSION.tar.gz
 ENV USER_ID=1001
 ADD LICENSE /licenses/apache2
 LABEL name=pgbouncer \
@@ -11,9 +12,9 @@ LABEL name=pgbouncer \
 
 RUN microdnf install -y make openssl-devel libevent libevent-devel pkgconfig automake autoconf gcc curl glibc-devel tar gzip && \
 
-curl -sLo /tmp/pgbouncer-$VERSION.tar.gz https://pgbouncer.github.io/downloads/files/$VERSION/pgbouncer-$VERSION.tar.gz && \
+curl -sLo /tmp/${PGBOUNCER_VER} https://pgbouncer.github.io/downloads/files/$VERSION/${PGBOUNCER_VER} && \
 
-tar xzvf /tmp/pgbouncer-1.16.0.tar.gz -C /opt && \
+tar xzvf /tmp/${PGBOUNCER_VER} -C /opt && \
 
 mkdir /etc/pgbouncer && \
 
